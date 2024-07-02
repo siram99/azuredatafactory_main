@@ -1,0 +1,9 @@
+{
+	"name": "devraja",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8c7c51f5-cbd5-4c89-8013-79a2743ae7f0",
+		"tenantId": "5bad653b-201a-4b08-8752-1b00445c07a4"
+	}
+}
