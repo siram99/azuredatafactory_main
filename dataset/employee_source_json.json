@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "emp_dts6.json",
+				"fileName": "emp_dts7.json",
 				"fileSystem": "srcfiles"
 			}
 		},
