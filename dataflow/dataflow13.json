@@ -1,0 +1,100 @@
+{
+	"name": "dataflow13",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Source_employee_duplicate",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeeDuplicate"
+				},
+				{
+					"dataset": {
+						"referenceName": "Source_department_duplicate",
+						"type": "DatasetReference"
+					},
+					"name": "DepartmentDuplicate"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Sinkemployee",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Sinkemployee",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flowlet1",
+					"flowlet": {
+						"referenceName": "flowlet1",
+						"type": "DataFlowReference"
+					}
+				},
+				{
+					"name": "flowlet2",
+					"flowlet": {
+						"referenceName": "flowlet1",
+						"type": "DataFlowReference"
+					}
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          emp_id as string,",
+				"          emp_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmployeeDuplicate",
+				"source(output(",
+				"          dp_id as string,",
+				"          dp_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DepartmentDuplicate",
+				"EmployeeDuplicate compose(mapColumn(",
+				"          id = emp_id,",
+				"          name = emp_name",
+				"     ),",
+				"     composition: 'flowlet1') ~> flowlet1@(output1)",
+				"DepartmentDuplicate compose(mapColumn(",
+				"          id = dp_id,",
+				"          name = dp_name",
+				"     ),",
+				"     composition: 'flowlet1') ~> flowlet2@(output1)",
+				"flowlet1@output1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['employee_distinct.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"flowlet2@output1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['department_distinct.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink2"
+			]
+		}
+	}
+}
