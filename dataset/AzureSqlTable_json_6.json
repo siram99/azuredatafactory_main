@@ -1,0 +1,41 @@
+{
+	"name": "AzureSqlTable_json_6",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "varchar"
+			},
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "languages",
+				"type": "varchar"
+			},
+			{
+				"name": "qulafication",
+				"type": "varchar"
+			},
+			{
+				"name": "current_city",
+				"type": "varchar"
+			},
+			{
+				"name": "current_state",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employee_details_json"
+		}
+	}
+}
