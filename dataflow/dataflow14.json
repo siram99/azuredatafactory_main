@@ -59,7 +59,7 @@
 				"          empname,",
 				"          skill1 = parse_skills.skills1,",
 				"          skill2 = parse_skills.skills2,",
-				"          skills3 = parse_skills.skills3,",
+				"          skill3 = parse_skills.skills3,",
 				"          city = ParseAddress.city,",
 				"          country = ParseAddress.country",
 				"     ),",
