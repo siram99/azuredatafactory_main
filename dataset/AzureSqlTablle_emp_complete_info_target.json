@@ -1,0 +1,46 @@
+{
+	"name": "AzureSqlTablle_emp_complete_info_target",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "empid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "empname",
+				"type": "varchar"
+			},
+			{
+				"name": "skill1",
+				"type": "varchar"
+			},
+			{
+				"name": "skill2",
+				"type": "varchar"
+			},
+			{
+				"name": "skill3",
+				"type": "varchar"
+			},
+			{
+				"name": "city",
+				"type": "varchar"
+			},
+			{
+				"name": "country",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "emp_complete_info"
+		}
+	}
+}
