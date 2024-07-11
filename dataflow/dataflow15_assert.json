@@ -1,0 +1,77 @@
+{
+	"name": "dataflow15_assert",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Source_employee_assert",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeeAssert"
+				},
+				{
+					"dataset": {
+						"referenceName": "Source_department_assert",
+						"type": "DatasetReference"
+					},
+					"name": "DepartmentAssert"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Sinkemployee",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "assert1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as short,",
+				"          empname as string,",
+				"          gender as string,",
+				"          dob as string,",
+				"          deptid as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmployeeAssert",
+				"source(output(",
+				"          deptid as short,",
+				"          depname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DepartmentAssert",
+				"EmployeeAssert, DepartmentAssert assert(expectUnique(empid, false, 'assert1'),",
+				"     expectTrue(!isNull(toDate(dob, 'ddmmyyyy')), false, 'assert2'),",
+				"     expectExists(EmployeeAssert@deptid == DepartmentAssert@deptid, false, 'assert3')) ~> assert1",
+				"assert1 derive(iserror = isError()) ~> derivedColumn1",
+				"derivedColumn1 filter(iserror==false()) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['assert_data.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
