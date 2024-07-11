@@ -8,7 +8,7 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
-		"AzureSqlDatabase1_password": {
+		"AzureSqlDatabase1_connectionString": {
 			"value": ""
 		},
 		"AzureSqlDatabase2_connectionString": {
@@ -16,15 +16,6 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://inbound.dfs.core.windows.net/"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_server": {
-			"value": "devsqlserverraja.database.windows.net"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_database": {
-			"value": "devsqlraja"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_userName": {
-			"value": "raja"
 		}
 	}
 }
